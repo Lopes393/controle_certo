@@ -24,7 +24,14 @@ class Contact
     /**
      * @ORM\Column(type="string")
      */
-    private int $description;
+    private string $description;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="People")
+     * @ORM\JoinColumn(name="id_people", referencedColumnName="id")
+     */
+    private int $idPeople;
 
     public function getId(): int
     {
@@ -56,5 +63,15 @@ class Contact
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getIdPeople(): int
+    {
+        return $this->idPeople;
+    }
+
+    public function setIdPeople($idPeople)
+    {
+        $this->idPeople = $idPeople;
     }
 }

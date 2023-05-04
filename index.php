@@ -2,8 +2,8 @@
 
 use src\Helper\EntityManagerFactory;
 
-require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../src/Helper/EntityManagerFactory.php';
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/src/Helper/EntityManagerFactory.php';
 
 $entityManegerFactory = new EntityManagerFactory();
 $entityManeger = $entityManegerFactory->getEntityManager();
