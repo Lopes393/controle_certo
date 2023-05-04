@@ -14,18 +14,19 @@ class EntityManagerFactory
      */
     public function getEntityManager(): EntityManagerInterface
     {
+        $isDevMode = true;
         $rootDir = __DIR__ . '/../..';
-        $config = Setup::createAnnotationMetadataConfiguration(
-            [
-                $rootDir . '/src'
-            ],
-            true // modo Desenvolvimento
-        );
-        $connection = [
+
+        $config = Setup::createAnnotationMetadataConfiguration([$rootDir . "/src"], $isDevMode);
+
+        $conn = [
+            'dbname' => 'controle_certo',
+            'user' => 'root',
+            'password' => '@postgres',
+            'host' => 'localhost',
             'driver' => 'pdo_mysql',
-            'path' => $rootDir . '/.env'
         ];
 
-        return EntityManager::create($connection, $config);
+        return EntityManager::create($conn, $config);
     }
 }
