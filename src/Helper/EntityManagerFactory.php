@@ -22,7 +22,7 @@ class EntityManagerFactory
             true // modo Desenvolvimento
         );
         $connection = [
-            'driver' => 'pdo_sqlite',
+            'driver' => 'pdo_mysql',
             'path' => $rootDir . '/.env'
         ];
 
