@@ -1,9 +1,9 @@
 <?php
 
-require_once('src/Helper/EntityManagerFactory.php');
+require_once('src/Config/EntityManagerFactory.php');
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use src\Helper\EntityManagerFactory;
+use src\Config\EntityManagerFactory;
 
 
 require_once __DIR__ . '/vendor/autoload.php';

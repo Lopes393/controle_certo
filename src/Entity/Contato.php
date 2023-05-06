@@ -1,17 +1,22 @@
 <?php
 
-namespace src\Entity;
+namespace Src\Entity;
+
+use Src\Entity\People;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="contato")
  */
-class Contact
+class Contato
 {
     /**
      * @ORM\Id
+     *
      * @ORM\GeneratedValue
+     *
      * @ORM\Column(type="integer")
      */
     private int $id;
@@ -19,6 +24,7 @@ class Contact
     /**
      * @ORM\Column(type="string")
      */
+
     private string $type;
 
     /**
@@ -28,8 +34,10 @@ class Contact
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @ORM\ManyToOne(targetEntity="People")
-     * @ORM\JoinColumn(name="id_people", referencedColumnName="id")
+     *
+     * @ORM\JoinColumn(name="idPeople", referencedColumnName="id")
      */
     private int $idPeople;
 
@@ -38,10 +46,10 @@ class Contact
         return $this->id;
     }
 
-
     public function setId($id): self
     {
         $this->id = $id;
+
         return $this;
     }
 

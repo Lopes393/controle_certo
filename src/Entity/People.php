@@ -5,7 +5,8 @@ namespace src\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(Repository::class)
+ * @ORM\Table(name="people")
  */
 class People
 {
