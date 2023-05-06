@@ -12,10 +12,6 @@ class ContatoController
         $this->entityManagerFactory = new \Src\Config\EntityManagerFactory();
     }
 
-
-    /**
-     * @Route("/product", name="product_list")
-     */
     public function index()
     {
         $entityManager = $this->entityManagerFactory->getEntityManager();

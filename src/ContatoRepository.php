@@ -9,8 +9,7 @@ class ContatoRepository extends EntityRepository
     public function findAllOrderedByName()
     {
         return $this->getEntityManager()
-            ->createQuery('SELECT p FROM Product p ORDER BY p.name ASC')
-            ->getResult()
-        ;
+            ->createQuery('SELECT * FROM contato c ORDER BY c.name ASC')
+            ->getResult();
     }
 }
