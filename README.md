@@ -49,3 +49,7 @@ Na raiz do projeto temos o arquivo 'Rotas.php', onde estão todas as rotas da AP
 <p align="center">
   <img alt="Rotas" src=".github/img/rotas.png" width="100%">
 </p>
+
+O projeto pode ser executado utilizando Docker, Apache ou no servidor padrão do PHP.
+
+docker-compose up
