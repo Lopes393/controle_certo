@@ -9,5 +9,5 @@ require '../vendor/autoload.php';
 require_once '../Rotas.php';
 
 $rotas = new Rotas();
-$rotas->executar('GET', '/pessoas');
-//$rotas->executar($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+//$rotas->executar('GET', '/pessoas');
+$rotas->executar($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
