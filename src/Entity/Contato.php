@@ -33,13 +33,10 @@ class Contato
     private string $description;
 
     /**
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\ManyToOne(targetEntity="People")
-     *
-     * @ORM\JoinColumn(name="idPeople", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="People", inversedBy="contato")
+     * @ORM\JoinColumn(name="id_people", referencedColumnName="id")
      */
-    private int $idPeople;
+    private $id_people;
 
     public function getId(): int
     {
@@ -75,11 +72,11 @@ class Contato
 
     public function getIdPeople(): int
     {
-        return $this->idPeople;
+        return $this->id_people;
     }
 
     public function setIdPeople($idPeople)
     {
-        $this->idPeople = $idPeople;
+        $this->id_people = $idPeople;
     }
 }

@@ -2,14 +2,29 @@
 
 namespace Src\Controller;
 
+use Src\Entity\Contato;
 use Src\Entity\People;
 
-class PessoaController
+class PeopleController
 {
     private $entityManagerFactory;
     public function __construct()
     {
         $this->entityManagerFactory = new \Src\Config\EntityManagerFactory();
+    }
+
+    public function indexApi()
+    {
+        $entityManager = $this->entityManagerFactory->getEntityManager();
+
+        $pessoaRepository = $entityManager->getRepository(People::class);
+        //$data = $pessoaRepository->findAllDados();
+        $queryBuilder = $pessoaRepository->createQueryBuilder('p')
+            ->select('p', 'c')
+            ->leftJoin('p.contato', 'c')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
     }
 
     public function index()
@@ -69,6 +84,12 @@ class PessoaController
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
         $pessoa = $entityManager->getRepository(People::class)->find($id);
+        $contatos = $entityManager->getRepository(Contato::class)->findby(['idPeople' => $id]);
+
+        foreach ($contatos as $contato) {
+            $entityManager->remove($contato);
+            $entityManager->flush();
+        }
 
         if (!$pessoa) {
             throw $this->createNotFoundException('Pessoa não encontrada');

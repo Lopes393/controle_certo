@@ -2,10 +2,13 @@
 
 namespace src\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Src\Entity\Contato;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(Repository::class)
+ * @ORM\Entity
  * @ORM\Table(name="people")
  */
 class People
@@ -26,6 +29,17 @@ class People
      * @ORM\Column(type="string")
      */
     private int $cpf;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Contato", mappedBy="id_people")
+     */
+    private $contato;
+
+    public function __construct()
+    {
+        $this->contato = new ArrayCollection();
+    }
+
 
     public function getId(): int
     {
