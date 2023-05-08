@@ -31,7 +31,7 @@ class People
     private int $cpf;
 
     /**
-     * @ORM\OneToMany(targetEntity="Contato", mappedBy="id_people")
+     * @ORM\OneToMany(targetEntity="Src\Entity\Contato", mappedBy="id_people")
      */
     private $contato;
 

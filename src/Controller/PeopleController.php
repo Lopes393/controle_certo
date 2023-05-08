@@ -18,7 +18,6 @@ class PeopleController
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
         $pessoaRepository = $entityManager->getRepository(People::class);
-        //$data = $pessoaRepository->findAllDados();
         $queryBuilder = $pessoaRepository->createQueryBuilder('p')
             ->select('p', 'c')
             ->leftJoin('p.contato', 'c')

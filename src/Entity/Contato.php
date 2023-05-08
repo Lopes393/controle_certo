@@ -33,7 +33,7 @@ class Contato
     private string $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="People", inversedBy="contato")
+     * @ORM\ManyToOne(targetEntity="Src\Entity\People", inversedBy="Contato")
      * @ORM\JoinColumn(name="id_people", referencedColumnName="id")
      */
     private $id_people;
