@@ -44,6 +44,8 @@ abstract class RoteadorAbstract
                     $response = call_user_func_array([$controller, $rota['metodoController']], [$data]);
                 }
 
+                // dd(json_encode($response));
+
                 echo json_encode($response);
 
                 return;

@@ -15,6 +15,8 @@ class PeopleController
 
     public function indexApi()
     {
+
+        return ['ola'];
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
         $pessoaRepository = $entityManager->getRepository(People::class);
@@ -31,17 +33,38 @@ class PeopleController
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
         $pessoaRepository = $entityManager->getRepository(People::class);
-        $pessoas = $pessoaRepository->findAll();
+        $pessoas = $pessoaRepository->createQueryBuilder('p')
+            ->select('p')
+            ->getQuery()->getArrayResult();
 
         return $pessoas;
     }
 
     public function show($id)
     {
+
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
         $pessoaRepository = $entityManager->getRepository(People::class);
-        $pessoa = $pessoaRepository->find($id);
+        $pessoa = $pessoaRepository->createQueryBuilder('p')
+            ->select('p')
+            ->andWhere(
+                "p.id = $id"
+            )
+            ->getQuery()
+            ->getArrayResult()[0];
+
+        $contatoRepository = $entityManager->getRepository(Contato::class);
+        $contatos = $contatoRepository->createQueryBuilder('c')
+            ->select('c')
+            ->andWhere(
+                "c.id_people = $id",
+            )
+            ->getQuery()->getArrayResult();
+
+
+        $pessoa['contatos'] = $contatos;
+
 
         return $pessoa;
     }

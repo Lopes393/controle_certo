@@ -17,35 +17,8 @@ export default function Home() {
   const [searchString, setSearchString] = useState("");
   const [apis, setApis] = useState<API[]>([]);
 
-  const fakeContacts = [
-    { id: 1, name: "Linus Torvalds", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-1234" },
-    { id: 2, name: "Robert Cecil Martin", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-1235" },
-    { id: 3, name: "Tim Berners-Lee", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-2345" },
-    { id: 4, name: "Vaughn Vernon", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-3462" },
-    { id: 5, name: "Rodrigo Branas", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-2341" },
-    { id: 6, name: "Alan Turing", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-6432" },
-    { id: 7, name: "Rasmus Lerdorf", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-3215" },
-    { id: 8, name: "Elon Musk", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-8765" },
-    { id: 9, name: "Bjarne Stroustrup", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-3233" },
-    { id: 10, name: "Andrew Yu e Jolly Chen", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-2222" },
-    { id: 11, name: "Bitter", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-4511" },
-    { id: 12, name: "Murilo Lopes", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-2211" },
-    { id: 13, name: "Elon Musk", cpf: "123.456.789-11", type: "Celular", description: "(64) 99995-4422" },
-  ];
-
   useEffect(() => {
-    setContact(fakeContacts[0]);
-    setContats(fakeContacts);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("http://localhost:8000/controle_certo/");
-      const data = await response.json();
-      setApis(data);
-    };
-
-    fetchData();
+    getPeaple();
   }, []);
 
   const handleSearch = (e: any) => {
@@ -55,8 +28,20 @@ export default function Home() {
     contact.name.toLowerCase().includes(searchString.toLowerCase())
   );
 
-  function handleDetail(contactDetail: any) {
-    setContact(contactDetail);
+  async function handleDetail(contactDetail: any) {
+    getPeapleById(contactDetail.id);
+  }
+
+  async function getPeapleById(id: number) {
+    const response = await fetch(`http://localhost:8000/public/index/pessoas/${id}`);
+    const data = await response.json();
+    setContact(data);
+  }
+
+  async function getPeaple() {
+    const response = await fetch("http://localhost:8000/public/index/pessoas");
+    const data = await response.json();
+    setContats(data);
   }
 
   return (
@@ -81,17 +66,26 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="detail">
-          <div className="card">
-            <div className="contact">
-              <img src="https://i.imgur.com/Y326hv0.png" alt="" />
-              <h2>{contact?.name}</h2>
+        {contact.id ? (
+          <div className="detail">
+            <div className="card">
+              <div className="contact">
+                <img src="https://i.imgur.com/Y326hv0.png" alt="" />
+                <h2>{contact?.name}</h2>
+              </div>
+              <p className="cpf">CPF: {contact?.cpf}</p>
+              {contact?.contatos?.map((contato: any) => (
+                <>
+                  <p className="phone-number">Tipo: {contato?.type}</p>
+                  <p className="description">Contato: {contato.description}</p>
+                </>
+              ))}
             </div>
-            <p className="cpf">CPF: {contact?.cpf}</p>
-            <p className="phone-number">Tipo: {contact?.type}</p>
-            <p className="description">Contato: {contact.description}</p>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
+
         <div className="buttons">
           <button className="alter">-</button>
           <button className="save">+</button>
