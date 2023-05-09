@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import CustomButton from "./components/CustomButton";
+import CustomInput from "./components/CustomInput";
 
 type API = {
   id: number;
@@ -15,7 +17,6 @@ export default function Home() {
   const [contacts, setContats] = useState<any>([]);
   const [contact, setContact] = useState<any>({});
   const [searchString, setSearchString] = useState("");
-  const [apis, setApis] = useState<API[]>([]);
 
   useEffect(() => {
     getPeaple();
@@ -49,12 +50,11 @@ export default function Home() {
       <div className="content">
         <div className="contacts">
           <div className="search">
-            <input
-              type="text"
-              className="input"
-              placeholder="Search all contacts"
-              onChange={handleSearch}
+            <CustomInput
+              placeholder="Pesquisar Contatos"
               value={searchString}
+              onChange={handleSearch}
+              className="input"
             />
           </div>
           <div className="itens">
@@ -87,8 +87,9 @@ export default function Home() {
         )}
 
         <div className="buttons">
-          <button className="alter">-</button>
-          <button className="save">+</button>
+          <CustomButton className="custom-button-delete" text="-" variant="primary" />
+          <CustomButton className="custom-button-alter" text="/" variant="primary" />
+          <CustomButton className="custom-button-save" text="+" variant="primary" />
         </div>
       </div>
     </main>

@@ -13,21 +13,6 @@ class PeopleController
         $this->entityManagerFactory = new \Src\Config\EntityManagerFactory();
     }
 
-    public function indexApi()
-    {
-
-        return ['ola'];
-        $entityManager = $this->entityManagerFactory->getEntityManager();
-
-        $pessoaRepository = $entityManager->getRepository(People::class);
-        $queryBuilder = $pessoaRepository->createQueryBuilder('p')
-            ->select('p', 'c')
-            ->leftJoin('p.contato', 'c')
-            ->getQuery();
-
-        return $queryBuilder->getResult();
-    }
-
     public function index()
     {
         $entityManager = $this->entityManagerFactory->getEntityManager();
