@@ -1,4 +1,4 @@
-## 🚀 Controle Certo API
+## 🚀 Controle Certo
 
 API para cadastro de Pessoas e contatos desenvolvida em PHP e utilizando Doctrine ORM para gerenciamento do banco de dados.
 
@@ -6,15 +6,15 @@ API para cadastro de Pessoas e contatos desenvolvida em PHP e utilizando Doctrin
 
 Para utilizar a API, clone o projeto na sua máquina:
 
-git clone https://github.com/Lopes393/controle_certo.git
+`git clone https://github.com/Lopes393/controle_certo.git`
 
 Após clonar o repositorio, entre na pasta com o comando:
 
-cd controle_certo
+`cd controle_certo`
 
 Para que o Composer, gerenciador de dependências, possa fazer o download de todas as dependências do projeto, rode:
 
-composer install
+`composer install`
 
 ## Observação
 
@@ -28,7 +28,7 @@ Esta dependência está em sua versão 2.0. Para conseguirmos rodar o projeto se
 Para utilizar o projeto você precisa de um banco de dados MySQL, se já tiver o SGBD instalado em sua máquina, acesse-o e
 crie um novo banco de dados:
 
-create database nome_banco;
+`create database nome_banco`;
 
 Após criar o banco de dados será necessário informar suas informações de conexão para a API em src/Config/EntityManegerFactory.php:
 
@@ -50,6 +50,20 @@ Na raiz do projeto temos o arquivo 'Rotas.php', onde estão todas as rotas da AP
   <img alt="Rotas" src=".github/img/rotas.png" width="100%">
 </p>
 
-O projeto pode ser executado utilizando Docker, Apache ou no servidor padrão do PHP.
+Para executar a aplicação precisamos dar start nos servidores:
 
-docker-compose up
+Rode `php -S localhost:8000` na raiz do projeto.
+
+Entre no pasta do frontend para iniciar o serviço:
+
+`cd frontend/controle_certo`
+
+Rode:
+
+`npm run dev`
+
+Acesse `http://localhost:3000` e a aplicação estará pronta para uso.
+
+
+
+*Developed with love and dedication* - **Murilo Lopes**
