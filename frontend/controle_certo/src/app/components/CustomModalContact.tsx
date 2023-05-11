@@ -14,8 +14,6 @@ const CustomModal: React.FC<ModalProps> = ({ show, title, onHide }) => {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <CustomInput placeholder="Nome" className="input-modal" />
-        <CustomInput placeholder="CPF" className="input-modal" />
         <CustomInput placeholder="Tipo" className="input-modal" />
         <CustomInput placeholder="Descrição" className="input-modal" />
       </Modal.Body>

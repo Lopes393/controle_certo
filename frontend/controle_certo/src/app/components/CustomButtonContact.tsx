@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import CustomModal from "./CustomModal";
+import CustomModalContact from "./CustomModalContact";
 
 type CustomButtonProps = {
   className?: string;
   text?: string;
   variant: string;
+  disable: boolean;
+  setDisable: any;
 };
 
-const CustomButton: React.FC<CustomButtonProps> = ({ className, text, variant }) => {
+const CustomButton: React.FC<CustomButtonProps> = ({ className, text, variant, setDisable, disable }) => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
 
@@ -19,18 +21,20 @@ const CustomButton: React.FC<CustomButtonProps> = ({ className, text, variant })
       setTitle("Alterar contato");
     }
     setShowModal(true);
+    setDisable(true);
   };
 
   const handleHideModal = () => {
     setShowModal(false);
+    setDisable(false);
   };
 
   return (
     <>
-      <Button className={className} variant={variant} onClick={handleShowModal} disabled={showModal}>
+      <Button className={className} variant={variant} onClick={handleShowModal} disabled={disable}>
         {text}
       </Button>
-      <CustomModal show={showModal} onHide={handleHideModal} title={title} />
+      <CustomModalContact show={showModal} onHide={handleHideModal} title={title} />
     </>
   );
 };

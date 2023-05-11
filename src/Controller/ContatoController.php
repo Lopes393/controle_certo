@@ -69,15 +69,18 @@ class ContatoController
     {
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
-        $contact = $entityManager->getRepository(Contato::class)->find($id);
+        $registro = $entityManager->getRepository(Contato::class)->find($id);
 
-        if (!$contact) {
+        if (!$registro) {
             throw $this->createNotFoundException('Contato não encontrado');
         }
 
-        $entityManager->remove($contact);
+        $entityManager->remove($registro);
         $entityManager->flush();
 
-        return ['ok' => 'Contato ' . $id . ' deletado com sucesso'];
+        return [
+            'status' => 'success',
+            'response' => 'Contato deletado com sucesso!'
+        ];
     }
 }

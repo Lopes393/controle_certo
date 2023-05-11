@@ -59,13 +59,35 @@ class PeopleController
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
         $pessoa = new People();
-        $pessoa->setName($data['name']);
+        $pessoa->setName($data['nome']);
         $pessoa->setCpf($data['cpf']);
 
         $entityManager->persist($pessoa);
         $entityManager->flush();
 
-        return ['ok' => 'Pessoa salva com sucesso ' . $pessoa->getId()];
+        $idPessoa = $pessoa->getId();
+
+        $pessoaRepository = $entityManager->getRepository(People::class);
+        $data = $pessoaRepository->createQueryBuilder('p')
+            ->select('p')
+            ->andWhere(
+                "p.id = $idPessoa"
+            )
+            ->getQuery()
+            ->getArrayResult()[0];
+
+        if ($data) {
+            return [
+                'status' => 'success',
+                'title' => 'Pessoa salva com sucesso',
+                'pessoa' => $data
+            ];
+        }
+
+        return [
+            'status' => 'error',
+            'title' => 'Erro ao salvar pessoa',
+        ];
     }
 
     public function update($id, $data)
@@ -83,28 +105,30 @@ class PeopleController
 
         $entityManager->flush();
 
-        return ['ok' => 'Pessoa ' . $id . ' alterada com sucesso'];
+        return ['response' => 'Pessoa ' . $id . ' alterada com sucesso'];
     }
 
     public function destroy($id)
     {
         $entityManager = $this->entityManagerFactory->getEntityManager();
+        $registro = $entityManager->getRepository(People::class)->find($id);
+        $contatos = $entityManager->getRepository(Contato::class)->findBy(['id_people' => $id]);
 
-        $pessoa = $entityManager->getRepository(People::class)->find($id);
-        $contatos = $entityManager->getRepository(Contato::class)->findby(['idPeople' => $id]);
+        if (!$registro) {
+            throw $this->createNotFoundException('Pessoa não encontrada');
+        }
 
         foreach ($contatos as $contato) {
             $entityManager->remove($contato);
             $entityManager->flush();
         }
 
-        if (!$pessoa) {
-            throw $this->createNotFoundException('Pessoa não encontrada');
-        }
-
-        $entityManager->remove($pessoa);
+        $entityManager->remove($registro);
         $entityManager->flush();
 
-        return ['ok' => 'Pessoa ' . $id . ' deletada com sucesso'];
+        return [
+            'status' => 'success',
+            'response' => 'Pessoa deletada com sucesso!'
+        ];
     }
 }

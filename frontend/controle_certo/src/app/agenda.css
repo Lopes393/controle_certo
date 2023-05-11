@@ -29,6 +29,9 @@
     background-color: #e7e7e7;
     margin: 5px;
 }
+.contacts{
+    position: relative;
+}
 .contacts .itens {
     width: 90%;
 }
@@ -93,30 +96,30 @@
     font-size: 18px;
     margin-bottom: 10px;
 }
-.card .phone-number {
+hr{
+    margin-bottom: 15px;
+}
+
+.contact-description{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.phone-number {
     font-size: 18px;
 }
 
-.card .description {
+.description {
     font-size: 18px;
-    margin-bottom: 10px;
 }
 
 .buttons {
     display: flex;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    height: 240px;
-    flex-direction: column;
-
+    width: 80px;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
-
-.buttons > * {
-    margin: 10px 0;
-}
-
-.custom-button-save {
+.custom-button-save-people {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -128,40 +131,27 @@
     bottom: 20px;
     transition: filter 0.2s;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    position: absolute;
 }
-.custom-button-save:hover {
+.custom-button-save-people:hover {
     filter: brightness(0.8);   
 }
-.custom-button-alter {
+.custom-button-save-contact {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     font-size: 2rem;
-    background-color: #46CAFC;
+    background-color: #33cc95;
     color: #fff;
     font-weight: bold;
     right: 20px;
     bottom: 20px;
     transition: filter 0.2s;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    position: absolute;
+
 }
-.custom-button-alter:hover {
-    filter: brightness(0.8);   
-}
-.custom-button-delete {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    font-size: 2rem;
-    background-color: #fe3636;
-    color: #fff;
-    font-weight: bold;
-    right: 20px;
-    bottom: 20px;
-    transition: filter 0.2s;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-}
-.custom-button-delete:hover {
+.custom-button-save-contact:hover {
     filter: brightness(0.8);   
 }
 .custom-modal {
@@ -194,3 +184,7 @@
     justify-content: space-evenly;
     margin-top: 20px;
 }
+
+.my-actions { margin: 0 2em; }
+.order-2 { order: 2; }
+.order-3 { order: 3; }
