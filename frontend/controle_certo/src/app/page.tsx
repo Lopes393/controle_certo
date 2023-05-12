@@ -1,6 +1,5 @@
 "use client"; // this is a client component 👈🏽
 
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import CustomButtonContact from "./components/CustomButtonContact";
 import CustomButtonInfo from "./components/CustomButtonInfo";
@@ -75,7 +74,6 @@ export default function Home() {
     });
   }
   function handleDeleteContato(id: number) {
-    console.log(id);
     Swal.fire({
       title: "Deletar contato?",
       showDenyButton: true,
@@ -89,6 +87,7 @@ export default function Home() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await axios.delete(`http://localhost:8000/public/index/contatos/${id}`);
+        getPeapleById(response.data.id_people);
         Swal.fire(response.data.response, "", response.data.status);
       } else if (result.isDenied) {
         Swal.fire("Operação cancelada", "", "info");
@@ -133,9 +132,13 @@ export default function Home() {
                 <img src="https://i.imgur.com/Y326hv0.png" alt="" />
                 <h2>{contact?.name}</h2>
                 <div className="buttons">
-                  <button>
-                    <FaEdit />
-                  </button>
+                  <CustomButtonInfo
+                    disable={disable}
+                    setDisable={setDisable}
+                    setDetail={getPeapleById}
+                    setContacts={getPeaple}
+                    data={contact}
+                  />
                   <button onClick={() => handleDeletePeople(contact.id)}>
                     <FaTrash />
                   </button>
@@ -148,9 +151,14 @@ export default function Home() {
                   <p className="phone-number">{contato?.type}</p>
                   <p className="description">{contato.description}</p>
                   <div className="buttons">
-                    <button>
-                      <FaEdit />
-                    </button>
+                    <CustomButtonContact
+                      disable={disable}
+                      setDisable={setDisable}
+                      setDetail={getPeapleById}
+                      idPessoa={contact.id}
+                      data={contato}
+                    />
+
                     <button onClick={() => handleDeleteContato(contato.id)}>
                       <FaTrash />
                     </button>
@@ -158,17 +166,19 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            <CustomButtonContact
+              className="custom-button-save-contact"
+              text="+"
+              variant="primary"
+              disable={disable}
+              setDisable={setDisable}
+              setDetail={getPeapleById}
+              idPessoa={contact.id}
+            />
           </div>
         ) : (
           <></>
         )}
-        <CustomButtonContact
-          className="custom-button-save-contact"
-          text="+"
-          variant="primary"
-          disable={disable}
-          setDisable={setDisable}
-        />
       </div>
     </main>
   );

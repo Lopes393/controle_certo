@@ -35,6 +35,7 @@ class Contato
     /**
      * @ORM\ManyToOne(targetEntity="Src\Entity\People", inversedBy="Contato")
      * @ORM\JoinColumn(name="id_people", referencedColumnName="id")
+     * @ORM\Column(type="integer")
      */
     private $id_people;
 

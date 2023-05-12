@@ -28,4 +28,4 @@ if (count($uri) > 4) {
 }
 
 $rotas->executar($_SERVER['REQUEST_METHOD'], "/" . $uri);
-//$rotas->executar('DELETE', "/" . 'pessoas/1');
+//$rotas->executar('DELETE', "/" . 'contatos/5');

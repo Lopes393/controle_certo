@@ -27,7 +27,6 @@ class PeopleController
 
     public function show($id)
     {
-
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
         $pessoaRepository = $entityManager->getRepository(People::class);
@@ -59,7 +58,7 @@ class PeopleController
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
         $pessoa = new People();
-        $pessoa->setName($data['nome']);
+        $pessoa->setName($data['name']);
         $pessoa->setCpf($data['cpf']);
 
         $entityManager->persist($pessoa);
@@ -102,10 +101,29 @@ class PeopleController
 
         $pessoa->setName($data['name']);
         $pessoa->setCpf($data['cpf']);
-
         $entityManager->flush();
 
-        return ['response' => 'Pessoa ' . $id . ' alterada com sucesso'];
+        $pessoaRepository = $entityManager->getRepository(People::class);
+        $data = $pessoaRepository->createQueryBuilder('p')
+            ->select('p')
+            ->andWhere(
+                "p.id = $id"
+            )
+            ->getQuery()
+            ->getArrayResult()[0];
+
+        if ($data) {
+            return [
+                'status' => 'success',
+                'title' => 'Pessoa alterada com sucesso',
+                'pessoa' => $data
+            ];
+        }
+
+        return [
+            'status' => 'error',
+            'title' => 'Erro ao alterar pessoa',
+        ];
     }
 
     public function destroy($id)

@@ -36,33 +36,68 @@ class ContatoController
     {
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
-        $contact = new Contato();
-        $contact->setType($data['type']);
-        $contact->setDescription($data['description']);
-        $contact->setIdPeople($data['idPeople']);
+        $contato = new Contato();
+        $contato->setType($data['type']);
+        $contato->setDescription($data['description']);
+        $contato->setIdPeople($data['id_people']);
 
-        $entityManager->persist($contact);
+        $entityManager->persist($contato);
         $entityManager->flush();
 
-        return ['ok' => 'Contato salvo com sucesso ' . $contact->getId()];
+        $idContato = $contato->getId();
+
+        $contatoRepository = $entityManager->getRepository(Contato::class);
+        $data = $contatoRepository->createQueryBuilder('c')
+            ->select('c')
+            ->andWhere(
+                "c.id = $idContato"
+            )
+            ->getQuery()
+            ->getArrayResult()[0];
+
+        if ($data) {
+            return [
+                'status' => 'success',
+                'title' => 'Contato salvo com sucesso',
+                'contato' => $data
+            ];
+        }
+
+        return [
+            'status' => 'error',
+            'title' => 'Erro ao salvar contato',
+        ];
     }
 
     public function update($id, $data)
     {
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
-        $contact = $entityManager->getRepository(Contato::class)->find($id);
+        $contato = $entityManager->getRepository(Contato::class)->find($id);
 
-        if (!$contact) {
+        if (!$contato) {
             throw $this->createNotFoundException('Contato não encontrado');
         }
 
-        $contact->setType($data['type']);
-        $contact->setDescription($data['description']);
+        $contato->setType($data['type']);
+        $contato->setDescription($data['description']);
+        $contato->setIdPeople($data['id_people']);
 
+        $entityManager->persist($contato);
         $entityManager->flush();
 
-        return ['ok' => 'Contato ' . $id . ' alterado com sucesso'];
+        if ($contato) {
+            return [
+                'status' => 'success',
+                'title' => 'Contato alterado com sucesso',
+                'contato' => $data
+            ];
+        }
+
+        return [
+            'status' => 'error',
+            'title' => 'Erro ao alterar contato',
+        ];
     }
 
     public function destroy($id)
@@ -70,7 +105,7 @@ class ContatoController
         $entityManager = $this->entityManagerFactory->getEntityManager();
 
         $registro = $entityManager->getRepository(Contato::class)->find($id);
-
+        $idPeople = $registro->getIdPeople();
         if (!$registro) {
             throw $this->createNotFoundException('Contato não encontrado');
         }
@@ -80,7 +115,8 @@ class ContatoController
 
         return [
             'status' => 'success',
-            'response' => 'Contato deletado com sucesso!'
+            'response' => 'Contato deletado com sucesso!',
+            'id_people' => $idPeople
         ];
     }
 }
